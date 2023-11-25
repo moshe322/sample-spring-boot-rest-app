@@ -1,0 +1,20 @@
+
+trigger: none
+pool: default
+steps:
+- script: 
+    git clone --branch main https://github.com/OmkarSirra/sample-spring-boot-rest-app.git
+  displayName: 'cloning'
+- script: |
+    - task: Maven@4
+      inputs:
+        mavenPomFile: 'sample-spring-boot-rest-app/pom.xml'
+        goals: 'clean package'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        javaHomeOption: 'JDKVersion'
+        mavenVersionOption: 'Default'
+        mavenAuthenticateFeed: false
+        effectivePomSkip: false
+        sonarQubeRunAnalysis: false
+  displayName: 'maven-run'
